@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
+    .carousel {
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-item {
+      flex: 0 0 93%;
+      padding: 21px;
+      text-align: center;
+    }
+    .carousel-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    .carousel-item .occupation {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .carousel-item .comment {
+      font-size: 14px;
+      color: #555;
+    }
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .carousel-controls button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .carousel-dots {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .carousel-dots .dot {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    .carousel-dots .dot.active {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item">
+      <img src="https://static.intsig.net/camscanner-seo/img/portrait5.3687483.png" alt="Saler">
+      <div class="occupation">Saler</div>
+      <div class="comment">I scan and send a lot of docs to my clients, that is why I have been using CamScanner heavily. It can detect the document edges and crop off the background. That is amazing. You have to try it!</div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.intsig.net/camscanner-seo/img/portrait6.3de8ed8.png" alt="Auditor">
+      <div class="occupation">Auditor</div>
+      <div class="comment">CamScanner is a great app for auditors. You know when you are facing tons of books and statements, CamScanner makes your life a lot easier.</div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.intsig.net/camscanner-seo/img/portrait7.557bc48.png" alt="Doctor">
+      <div class="occupation">Doctor</div>
+      <div class="comment">It is very convenient for me to scan my handwritten case histories and prescriptions into my phone and tablet so that I can discuss them with my colleague.</div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.intsig.net/camscanner-seo/img/portrait8.4b961e8.png" alt="Engineer">
+      <div class="occupation">Engineer</div>
+      <div class="comment">Use CamScanner to scan construction drawings, automatically correct the shooting angle, highlight key details, support manual fine-tuning of filters, add image annotations, electronic signatures, and assist various inspection and confirmation processes.</div>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <div class="carousel-dots"></div>
+</div>
+
+<script>
+  const carouselInner = document.querySelector('.carousel-inner');
+  const items = document.querySelectorAll('.carousel-item');
+  const dotsContainer = document.querySelector('.carousel-dots');
+  const prevButton = document.querySelector('.prev');
+  const nextButton = document.querySelector('.next');
+  let currentIndex = 0;
+
+  function updateCarousel() {
+    carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  function createDots() {
+    items.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateCarousel();
+      });
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+    updateCarousel();
+  });
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+    updateCarousel();
+  });
+
+  createDots();
+  updateCarousel();
+</script>
+
+</body>
+</html>
